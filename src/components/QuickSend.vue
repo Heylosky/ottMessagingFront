@@ -1,25 +1,32 @@
 <template>
-  <header>
+  <div>
     <span class="PageName">Quickly send SMS</span>
-  </header>
-  <body class="QuickSendSMS">
-  <div class="announcement">
   </div>
-  <div class="editor">
-    <div class="box">
-      <div class="left-bar">
-        <input class="infoItem" type="text" placeholder="Recipient" v-model.lazy="recipient">
-      </div>
-      <div class="right-bar">
-        <input class="infoItem" type="text" placeholder="Originator" v-model.lazy="originator">
-      </div>
+  <div class="QuickSendSMS" v-show="toBeSent">
+    <div class="announcement">
     </div>
-    <textarea class="msg-editor" rows="10" cols="30" placeholder="Please type your message here..." v-model.lazy="payload"></textarea>
+    <div class="editor">
+      <div class="box">
+        <div class="left-bar">
+          <input class="infoItem" type="text" placeholder="Recipient" v-model.lazy="recipient">
+        </div>
+        <div class="right-bar">
+          <input class="infoItem" type="text" placeholder="Originator" v-model.lazy="originator">
+        </div>
+      </div>
+      <textarea class="msg-editor" rows="10" cols="30" placeholder="Please type your message here..." v-model.lazy="payload"></textarea>
+    </div>
+    <div class="BtnList">
+      <button class="confirmBtn" @click="sendSMS">Send SMS</button>
+    </div>
   </div>
-  </body>
-  <footer class="BtnList">
-    <button class="confirmBtn" @click="sendSMS">Send SMS</button>
-  </footer>
+  <div class="sendSuccess" v-if="!toBeSent">
+    <div id="SuccessNotify">
+      Message sent successful.
+    </div>
+    <button style="background-color: #999a9c; color: white">Go Back</button> or
+    <button class="confirmBtn">View status in report</button>
+  </div>
 </template>
 
 <script>
@@ -32,21 +39,27 @@ export default {
       recipient: '',
       originator: '',
       payload: '',
+      toBeSent: true
     }
   },
   methods: {
     sendSMS() {
       let formData = new FormData()
-      formData.append('recipient', this.recipient)
+      formData.append('recipients', this.recipient)
       formData.append('originator', this.originator)
       formData.append('payload', this.payload)
-      requestPost('/v1/send', formData,  {
+      requestPost('/sms/v1/send', formData,  {
         headers: {
           "Content-Type": "application/json",
           "Authorization": "testtoken",
         }
       },res => {
         console.log(res);
+        if(res.status === 200) {
+          this.toBeSent = false
+        } else {
+          this.toBeSent = true
+        }
       }, err => {
         console.log(err);
       })
@@ -111,5 +124,12 @@ export default {
 .confirmBtn{
   background-color: orangered;
   color: white;
+}
+.sendSuccess{
+  text-align: center;
+}
+#SuccessNotify{
+  font-size: 20px;
+  padding-bottom: 5px;
 }
 </style>

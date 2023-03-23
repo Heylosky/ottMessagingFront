@@ -1,15 +1,5 @@
-# Vue 3 + Vite
-
-This project is based on VUE3 + Vite.
-
-npm create vite@latest ott-msg-web -- --template vue
-cd ott-msg-web
-npm install
-npm run dev
-npm build
-
-## Project Purpose
-
+# 项目介绍
+## 需求列表
 - A website for OTT messaging platform.
 - Be able to edit messages.
 - Be able to send message to single number.
@@ -18,10 +8,26 @@ npm build
 - Authorizations.
 - TLS service.
 - HA architecture.
+## 与OTT平台的集成
+平台做为文件服务器，提供静态资源文件，通过nginx转发。前后端之间的用户认证由jwt token完成，当请求各种
+业务api时（如：发送短信），先通过jwt token验证用户，然后在后端上获取用户的用户token，再使用用户token
+去进行发送请求。涉及到两个token间的转换。  
+也就是说OTT平台可以独立于web运行。
+
+## 基于Vue 3 + Vite
+This project is based on VUE3 + Vite.
+
+npm create vite@latest ott-msg-web -- --template vue  
+cd ott-msg-web  
+npm install  
+npm run dev  
+npm build
 
 ## Milestone
-
 - Project start date: 2023-Mar-9
+- 完成用户登陆页面，单条短信编辑和发送页面，短信状态report页面。
+- First version deploy on: 2023-Mar-23
+- to be continue...
 
 ## 提示
 1. 所有前端页面访问后端时，需要通过nginx配置转发，以解决跨域问题，并且在nginx中配置ssl，例如：

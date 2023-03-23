@@ -22,7 +22,7 @@
         <div class="menu-first-items" v-if="openedList===2">
           <ul>
             <li>
-              <div class="li-text" :class="{'li-active':isQuickSend}" @click="select">Quick Send</div>
+              <div class="li-text" :class="{'li-active':rightComp === 2.1}" @click="select(2.1)">Quick Send</div>
             </li>
             <li>
               <div class="li-text">Bulk Messages</div>
@@ -38,7 +38,7 @@
         <div class="menu-first-items" v-if="openedList===3">
           <ul>
             <li>
-              <div class="li-text" :class="{'li-active':isMStatus}">Message Status</div>
+              <div class="li-text" :class="{'li-active':rightComp === 3.1}" @click="select(3.1)">Message Status</div>
             </li>
             <li>
               <div class="li-text">Bulk Messages</div>
@@ -48,30 +48,31 @@
       </div>
     </div>
     <div class="right">
-      <quick-send v-if="isQuickSend"></quick-send>
+      <quick-send v-if="rightComp === 2.1"></quick-send>
+      <report-status v-if="rightComp === 3.1"></report-status>
     </div>
   </div>
 </template>
 
 <script>
 import QuickSend from "../components/QuickSend.vue";
+import ReportStatus from "../components/ReportStatus.vue";
 
 export default {
   name: "Home",
-  components: {QuickSend},
+  components: {ReportStatus, QuickSend},
   data() {
     return {
       openedList: 0,
-      isQuickSend: false,
-      isMStatus: false
+      rightComp: 0,
     }
   },
   methods: {
     openList(num) {
       this.openedList = num
     },
-    select() {
-      this.isQuickSend = !this.isQuickSend
+    select(num) {
+      this.rightComp = num
     }
   }
 }
@@ -93,10 +94,11 @@ export default {
   display: flex;
   height: 100%;
   min-width: 260px;
+  width: 20%;
 }
 .right {
   height: 100%;
-  width: 100%;
+  width: 80%;
 }
 .menu{
   width: 100%;
@@ -121,10 +123,10 @@ export default {
 }
 .menu-item:hover {
   cursor: pointer;
-  background-color: orangered;
+  background-color: rgb(255,102,0);
 }
 .list-active {
-  background-color: orangered;
+  background-color: rgb(255,102,0);
   color: black;
 }
 /** 可打开的菜单 */
@@ -173,11 +175,11 @@ li {
   padding-left: 10px;
 }
 .li-text:hover {
-  background-color: orangered;
+  background-color: rgb(255,102,0);
   color: white;
   cursor: pointer;
 }
 .li-active{
-  color: orangered;
+  color: rgb(255,102,0);
 }
 </style>

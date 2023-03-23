@@ -122,8 +122,11 @@ export default {
   text-align: right;
 }
 .confirmBtn{
-  background-color: orangered;
+  background-color: rgb(255,102,0);
   color: white;
+}
+button:hover {
+  background-color: orangered;
 }
 .sendSuccess{
   text-align: center;

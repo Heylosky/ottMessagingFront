@@ -67,7 +67,7 @@ server {
 }
 ```
 启动命令:
-``docker run -p 80:80 -p 8080:8080 -p 8082:8082 -d --name nginx -v /root/nginx/conf/conf.d:/etc/nginx/conf.d -v /root/9447796_www.sdesk.tech.key:/etc/nginx/ssl.key -v /root/9447796_www.sdesk.tech.pem:/etc/nginx/ssl.crt nginx``
+``docker run -p 80:80 -p 8080:8080 -p 8082:8082 -p 443:443 -d --name nginx -v /root/nginx/conf/conf.d:/etc/nginx/conf.d -v /root/9447796_www.sdesk.tech.key:/etc/nginx/ssl.key -v /root/9447796_www.sdesk.tech.pem:/etc/nginx/ssl.crt nginx``
 
 
 
